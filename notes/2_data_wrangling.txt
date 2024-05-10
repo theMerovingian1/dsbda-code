@@ -1,0 +1,70 @@
+EXCEL:
+=randbetween(60, 80)
+=IF(D2<75, 1, IF(D2>85, 2, 3))
+
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+
+df = pd.read_excel('impure_data.xlsx')
+df.sample(5)
+
+df.isnull()
+
+df.notnull()
+
+series = pd.isnull(df["math_score"])
+df[series]
+
+series1 = pd.notnull(df["math_score"])
+df[series1]
+
+from sklearn.preprocessing import LabelEncoder
+label_encoder = LabelEncoder()
+df['gender'] = label_encoder.fit_transform(df['gender'])
+df.sample(5)
+
+missing_values = ["Na", "na"]
+df.replace(missing_values, np.nan, inplace=True)
+
+df['math_score'] = df['math_score'].fillna(df['math_score'].mean())
+
+df.dropna(axis=0)
+
+col = ['math_score', 'reading_score' , 'writing_score','placement_score']
+df.boxplot(col)
+
+print(np.where(df['math_score']>80))
+print(np.where(df['reading_score']>95))
+print(np.where(df['writing_score']>80))
+
+df.rename(columns=lambda x: x.strip(), inplace=True)
+df.columns
+
+fig, ax = plt.subplots(figsize = (18,10))
+ax.scatter(df['placement_score'], df['placement_offer_count'])
+plt.show()
+# Labels to the axis can be assigned (Optional)
+ax.set_xlabel('(Proportion non-retail businessacres)/(town)')
+ax.set_ylabel('(Full-value property-tax rate)/($10,000)')
+
+print(np.where((df['placement_score']<50) & (df['placement_offer_count']>1)))
+print(np.where((df['placement_score']>85) & (df['placement_offer_count']<3)))
+
+from scipy import stats
+z = np.abs(stats.zscore(df['math_score']))
+z_scores_df = pd.DataFrame({'Index': df.index, 'Z-Score': z})
+pd.set_option('display.float_format', lambda x: '%.8f' % x)
+print(z_scores_df)
+
+threshold = 0.18
+sample_outliers = np.where(z <threshold)
+sample_outliers
+
+df['writing_score'] = df['writing_score'].fillna(df['writing_score'].mean())
+df['placement_score'] = df['placement_score'].fillna(df['placement_score'].mean())
+
+new_df=df
+for i in sample_outliers:
+    new_df.drop(i,inplace=True)
+new_df

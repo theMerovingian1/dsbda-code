@@ -1,0 +1,64 @@
+import pandas as pd
+import numpy as np
+df = pd.read_csv('student_performance.csv')
+df.head()
+
+df.mean()
+
+df.loc[:, 'math_score'].mean()
+
+df.mean(axis=1)[0:4]
+
+df.median()
+
+df.median(axis=1)[0:4]
+
+df.mode()
+
+df.loc[:,'math_score'].mode()
+
+df.min()
+
+df.loc[:,'math_score'].min(skipna = False)
+
+df.max()
+
+df.loc[:,'math_score'].max(skipna = False)
+
+df.std()
+
+df.loc[:,'reading_score'].std()
+
+df.std(axis=1)[0:4]
+
+df.groupby(['club_join_year'])['placement_score'].mean()
+
+df.groupby(['reading_score']).placement_offer_count.mean()
+
+from sklearn import preprocessing
+enc = preprocessing.OneHotEncoder()
+enc_df = pd.DataFrame(enc.fit_transform(df[['reading_score']]).toarray())
+enc_df.head()
+
+df_encode =df.join(enc_df)
+df_encode.head()
+
+
+csv_url = pd.read_csv('iris.csv')
+
+#iris = pd.read_csv(csv_url, names = col_names)
+irisSet = (csv_url['Species']=='Setosa')
+
+print(irisSet)
+
+print(csv_url[irisSet].describe())
+
+irisVer = (csv_url['Species']== 'Versicolor')
+
+print(csv_url[irisVer].describe())
+
+irisVir = (csv_url['Species']=='Virginica')
+
+
+print(csv_url[irisVir].describe())
+

@@ -1,0 +1,42 @@
+import pandas as pd
+df = pd.read_csv('iris.csv')
+df = pd.DataFrame(df)
+df.head()
+df.tail()
+df.sample(5)
+df.columns
+df.shape
+df[10:21]
+specific_data = df[["SepalLengthCm", "Species"]]
+print(specific_data)
+df.iloc[5]
+df.loc[df["Species"]=="Iris-setosa"]
+df["Species"].value_counts()
+sep_len_sum = df["SepalLengthCm"].sum()
+sep_len_mean = df["SepalLengthCm"].mean()
+sep_len_median = df["SepalLengthCm"].median()
+sep_len_min = df["SepalLengthCm"].min()
+sep_len_max = df["SepalLengthCm"].max()
+
+print("Sepal Length properties:\n")
+print("Sum: {}, Mean: {}, Median{}, Min: {}, Max: {}".format(
+    sep_len_sum, sep_len_mean, sep_len_median, sep_len_min, sep_len_max
+))
+df.isnull()
+df.isnull().sum()
+%pip install scikit-learn
+df.dtypes
+df["PetalLengthCm"] = df["PetalLengthCm"].astype(int)
+df["PetalLengthCm"] = df["PetalLengthCm"].astype(float)
+df.describe()
+from sklearn.preprocessing import MinMaxScaler, LabelEncoder
+min_max_scaler = MinMaxScaler()
+x = df.iloc[:,:4]
+x_scaled = min_max_scaler.fit_transform(x)
+df_normalized = pd.DataFrame(x_scaled)
+df_normalized
+label_encoder = LabelEncoder()
+df["Species"] = label_encoder.fit_transform(df["Species"])
+df["Species"].unique()
+merged_df = pd.concat([df["Species"], df_normalized], axis=1)
+merged_df.head()
