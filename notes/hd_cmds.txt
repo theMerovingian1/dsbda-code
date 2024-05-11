@@ -1,0 +1,15 @@
+open cmd as admin
+
+cd /
+cd hadoop
+cd sbin
+start-dfs.cmd
+
+jps
+
+start-yarn.cmd
+
+localhost:9870
+:8088
+
+

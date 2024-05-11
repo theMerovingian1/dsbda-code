@@ -1,0 +1,14 @@
+import scala.io.StdIn
+
+object SumOfTwoNumbers {
+  def main(args: Array[String]): Unit = {
+    println("Enter the first number:")
+    val num1 = StdIn.readLine().toDouble
+    
+    println("Enter the second number:")
+    val num2 = StdIn.readLine().toDouble
+    
+    val sum = num1 + num2
+    println(s"The sum of $num1 and $num2 is: $sum")
+  }
+}
